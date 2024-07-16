@@ -1,136 +1,81 @@
-import { Canvas } from "@react-three/fiber";
-import {
-  Environment,
-  MeshTransmissionMaterial,
-  RoundedBox,
-  useTexture,
-  useFBO,
+import * as THREE from 'three'
+import { Canvas, extend } from '@react-three/fiber'
+import { 
+  useGLTF,
+  MeshPortalMaterial,
   CameraControls,
-  shaderMaterial,
-} from "@react-three/drei";
-import { Splat } from "./splat";
-import { useFrame, extend } from "@react-three/fiber";
-import { useRef } from "react";
-import * as THREE from "three";
+  Text,
+  Sky,
+  Gltf,
+  Box,
+  RoundedBox } from '@react-three/drei'
+import { easing, geometry } from 'maath';
+import DepthBG from "./components/DepthBG";
 
-// import {useControls} from 'leva'// problematic
-// import { useTweaks } from 'tweakpane'
+extend(geometry);
+const GOLDENRATIO = 1.61803398875;
 
-function GlassPortal() {
-  const { roughness, transmission, rotation, showOriginal, color } =
-    // useControls ()
-    {
-      roughness: { value: 0.05, min: 0, max: 1 },
-      transmission: { value: 1, min: 0, max: 1 },
-      rotation: { value: 1.4 * Math.PI, min: 0, max: 2 * Math.PI },
-      showOriginal: { value: false },
-      color: { value: "#fff" },
-    };
-  const buffer = useFBO();
-  const ref = useRef();
-  const ref0 = useRef();
-  const ref1 = useRef();
-  const material = useRef();
-  const normalMap = useTexture("dirt1.png");
-  normalMap.wrapS = normalMap.wrapT = 1000;
 
-  useFrame((state) => {
-    ref0.current.visible = true;
-    ref1.current.visible = false;
-    state.gl.setRenderTarget(buffer);
-    state.gl.render(state.scene, state.camera);
-    state.gl.setRenderTarget(null);
-    ref0.current.visible = showOriginal.value;
-    ref1.current.visible = true;
-  });
-
+function App() {
   return (
-    <>
-      <group ref={ref0}>
-        <Splat
-          ref={ref}
-          scale={0.6}
-          rotation={[0, rotation.value, 0]}
-          position={[0, 0.2, 0.2]}
-          // https://www.youtube.com/watch?v=W7G7HqWbgdo
-          src="oleksii_zolotariov_sculpture.splat"
-        />
-        <DepthBG />
-      </group>
-      <RoundedBox
-        ref={ref1}
-        position={[0, 0, 0.8]}
-        args={[1.5, 2, 0.12]}
-        radius={0.03}
-      >
-        <MeshTransmissionMaterial
-          ref={material}
-          transmission={transmission.value}
-          roughness={roughness.value}
-          thickness={0.1}
-          normalMap={normalMap}
-          normalScale={[0.2, 0.2]}
-          color={color.value}
-          buffer={buffer.texture}
-        />
-      </RoundedBox>
-    </>
+    <Canvas
+      style={{width: 500, height: 500}}
+      gl={{ localClippingEnabled: true }}
+      camera={{ fov: 75, position: [0, 0, 1.5] }}
+      eventSource={document.getElementById('root')}
+      eventPrefix="client"
+    >
+      <color attach="background" args={['#f0f0f0']} />
+      <Frame id="01" name="toto" author="Jesse">
+        <Sky />
+        <Gltf src="Donut.glb" position={[0, -0.1, 0]}  scale={0.1} />
+      </Frame>
+      <CameraControls makeDefault /> {/*minAzimuthAngle={-Math.PI / 2.5} maxAzimuthAngle={Math.PI / 2.5} minPolarAngle={0.5} maxPolarAngle={Math.PI / 2}*/} />
+    </Canvas>
   );
 }
+export default App;
 
-function DepthBG() {
-  const StripeMaterial = shaderMaterial(
-    {},
-    // vertex shader
-    /*glsl*/ `
-      varying vec2 vUv;
-      varying vec3 vPosition;
-      void main() {
-        vUv = uv;
-        vPosition = position;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-      }
-    `,
-    // fragment shader
-    /*glsl*/ `
-      uniform float time;
-      uniform vec3 color;
-      varying vec2 vUv;
-      varying vec3 vPosition;
-      void main() {
-        float stripes = smoothstep(0.95,1., sin(vPosition.z * 30.0 ));
-        float fadeOut = smoothstep(-0.9, 0.1, vPosition.z);
-        gl_FragColor.rgba = vec4(fadeOut*0.2*vec3(stripes), 1.0);
-      }
-    `,
-  );
-
-  extend({ StripeMaterial });
-
+function Frame({
+  id,
+  name,
+  author,
+  width = 1,
+  height = GOLDENRATIO,
+  depth = 0.5,
+  children, 
+  ...props 
+}) {
   return (
-    <mesh>
-      <boxGeometry position={[0, 0, 0.8]} args={[1.5, 2, 1.5]} />
-      <stripeMaterial color="hotpink" time={1} side={THREE.BackSide} />
-    </mesh>
-  );
-}
-
-export default function App() {
-  return (
-    <div style={{width: 500, height: 500}}>
-      <Canvas camera={{ position: [0, 0, 3], fov: 75 }}>
-        <color attach="background" args={["#111111"]} />
-        <Environment preset="warehouse" />
-        {/* <Environment files="Default.exr" /> */}
-        {/* <Environment  near={1} far={1000} resolution={256}>
-  <mesh scale={100}>
-    <sphereGeometry args={[1, 64, 64]} />
-    <meshBasicMaterial color={'#ffffff'} side={THREE.DoubleSide}  />
-  </mesh>
-</Environment> */}
-        <GlassPortal />
-        <CameraControls />
-      </Canvas>
-    </div>
-  );
+    <group {...props}>
+      <Text 
+        color="red"
+        fontSize={0.25}
+        letterSpacing={-0.025}
+        anchorY="top"
+        anchorX="left"
+        lineHeight={0.8}
+        position={[-0.375, 0.715, depth/2 + 0.01]}>
+        {name}
+      </Text>
+      <Text color="red" fontSize={0.1} anchorX="right" position={[0.4, -0.659, depth/2 + 0.01]}>
+        /{id}
+      </Text>
+      <Text color="red" fontSize={0.04} anchorX="left" position={[0.0, -0.677, depth/2 + 0.01]}>
+        {author}
+      </Text>
+      <mesh name={id}>
+        <boxGeometry args={[width, height,depth]} />
+        <MeshPortalMaterial side={THREE.DoubleSide}>
+          <ambientLight/>
+          <DepthBG width={width} height={height} depth={depth*3} />
+          {children}
+        </MeshPortalMaterial>
+      </mesh>
+      <mesh name={id} position={[0, 0, -0.001]}>
+        <boxGeometry args={[width + 0.05, height + 0.05, depth]} />
+        <meshBasicMaterial color="red" />
+      </mesh>
+    </group>
+  )
 }
