@@ -2,7 +2,7 @@ import {
   shaderMaterial,
 } from "@react-three/drei";
 import {  extend } from "@react-three/fiber";
-import * as THREE from "three";
+import { BackSide } from "three";
 
 interface DepthBGProps {
   width: number;
@@ -42,7 +42,7 @@ function DepthBG({width, height, depth}: DepthBGProps) {
   return (
     <mesh>
       <boxGeometry position={[0, 0, 0.8]} args={[width, height, depth]} />
-      <stripeMaterial color="hotpink" time={1} side={THREE.BackSide} />
+      <stripeMaterial color="hotpink" time={1} side={BackSide} />
     </mesh>
   );
 }
