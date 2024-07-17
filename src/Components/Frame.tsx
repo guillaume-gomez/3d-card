@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import { DoubleSide } from 'three';
 import { extend } from '@react-three/fiber';
 import { MeshPortalMaterial, Text} from '@react-three/drei';
@@ -6,6 +7,16 @@ import DepthBG from "./DepthBG";
 
 extend(geometry);
 const GOLDENRATIO = 1.61803398875;
+
+interface FrameProps {
+  id: string;
+  name: string;
+  author: string;
+  width?: number;
+  height?: number;
+  depth?: number;
+  children: ReactNode
+}
 
 function Frame({
   id,
@@ -16,7 +27,7 @@ function Frame({
   depth = 0.5,
   children, 
   ...props 
-}) {
+} : FrameProps) {
   return (
     <group {...props}>
       <Text 
