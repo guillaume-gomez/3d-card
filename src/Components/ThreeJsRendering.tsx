@@ -17,6 +17,7 @@ function ThreeJsRendering() {
       <Frame id="01" name="toto" author="Jesse">
         <Sky />
         <Gltf src="Donut.glb" position={[0, -0.1, 0]} scale={0.1} visible={visible} />
+        <Gltf src="Donut.glb" position={[0.5, 0.1, 0.5]} scale={0.05} visible={visible} />
       </Frame>
       <CameraControls
         minAzimuthAngle={-Math.PI / 2}
