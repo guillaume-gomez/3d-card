@@ -54,7 +54,7 @@ function Frame({
           {children}
         </MeshPortalMaterial>
       </mesh>
-      <mesh name={id} position={[0, 0, -0.001]}>
+      <mesh name={id} position={[0, 0, -0.001]} castShadow>
         <boxGeometry args={[width + 0.05, height + 0.05, depth]} />
         <meshBasicMaterial color="blue" />
       </mesh>
