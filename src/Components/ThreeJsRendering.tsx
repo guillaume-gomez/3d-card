@@ -1,11 +1,22 @@
 import {  useState } from "react";
 import { Canvas } from '@react-three/fiber';
-import { CameraControls, Sky, Gltf } from '@react-three/drei';
+import { CameraControls, Sky, Gltf, Plane, Center, Lightformer } from '@react-three/drei';
+import { useSpring } from '@react-spring/web'
 
+import SkyBox from "./SkyBox";
 import Frame from "./Frame";
 
 function ThreeJsRendering() {
   const [visible, setVisible] = useState<boolean>(true);
+  const props = useSpring({
+    from: { scale: 0.1 },
+    to: { scale: 0.5 },
+    config: {
+      duration: 1000,
+    },
+    reverse: true,
+    loop: true
+  });
 
   return (
     <Canvas
@@ -14,11 +25,27 @@ function ThreeJsRendering() {
       camera={{ fov: 75, position: [0, 0, 1.5] }}
     >
       <color attach="background" args={['#f0f0f0']} />
-      <Frame id="01" name="toto" author="Jesse">
-        <Sky />
-        <Gltf src="Donut.glb" position={[0, -0.1, 0]} scale={0.1} visible={visible} />
-        <Gltf src="Donut.glb" position={[0.5, 0.1, 0.5]} scale={0.05} visible={visible} />
-      </Frame>
+      <SkyBox  size={100} />
+      <spotLight args={["#FFFFFF",100]} position={[2, 3, 0]} castShadow />
+      <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 6, 0]} scale={[10, 2, 1]} />
+
+
+      <Center>
+        <Frame id="01" name="Alice" author="Jesse" position={[-3,0,0]}>
+          <Sky />
+          <Gltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale.get('scale')} visible={visible} />
+        </Frame>
+        <Frame id="02" name="Guillaume" author="paulo" position={[-1,0,0]}>
+          <Sky />
+          <Gltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale.get('scale')} visible={visible} />
+        </Frame>
+      </Center>
+      <Plane
+        material-color="#2D1D7A"
+        position={[0,-2,0]}
+        rotation={[-Math.PI/2,0,0]}
+        args={[100,100]}
+      />
       <CameraControls
         minAzimuthAngle={-Math.PI / 2}
         maxAzimuthAngle={Math.PI / 2}
