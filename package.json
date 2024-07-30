@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-spring/three": "^9.7.4",
+    "@react-spring/web": "^9.7.4",
     "@react-three/drei": "^9.108.3",
     "@react-three/fiber": "^8.16.8",
     "@types/three": "^0.166.0",
@@ -19,6 +21,7 @@
     "react-dom": "^18.3.1",
     "three": "^0.166.1",
     "tweakpane": "^4.0.4",
+    "use-spring": "^0.2.4",
     "vite-plugin-checker": "^0.7.2"
   },
   "devDependencies": {
