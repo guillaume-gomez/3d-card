@@ -1,20 +1,25 @@
 import {  useState } from "react";
 import { Canvas } from '@react-three/fiber';
+import { useSpring, animated } from '@react-spring/three';
 import { CameraControls, Sky, Gltf, Plane, Center, Lightformer } from '@react-three/drei';
-import { useSpring } from '@react-spring/web'
 
 import SkyBox from "./SkyBox";
 import Frame from "./Frame";
 
+const AnimatedGltf = animated(Gltf);
+
 function ThreeJsRendering() {
   const [visible, setVisible] = useState<boolean>(true);
   const props = useSpring({
-    from: { scale: 0.1 },
-    to: { scale: 0.5 },
+    from: { scale: 0.05 },
+    to: [
+      { scale: 0.08 },
+      { scale: 0.1 },
+      { scale: 0.05 }
+    ],
     config: {
       duration: 1000,
     },
-    reverse: true,
     loop: true
   });
 
@@ -33,11 +38,11 @@ function ThreeJsRendering() {
       <Center>
         <Frame id="01" name="Alice" author="Jesse" position={[-3,0,0]}>
           <Sky />
-          <Gltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale.get('scale')} visible={visible} />
+          <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={visible} />
         </Frame>
         <Frame id="02" name="Guillaume" author="paulo" position={[-1,0,0]}>
           <Sky />
-          <Gltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale.get('scale')} visible={visible} />
+          <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={visible} />
         </Frame>
       </Center>
       <Plane
