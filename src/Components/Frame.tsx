@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
-import { DoubleSide } from 'three';
+import { DoubleSide, FrontSide } from 'three';
 import { extend } from '@react-three/fiber';
-import { MeshPortalMaterial, Text} from '@react-three/drei';
+import { MeshPortalMaterial, Text, FontData } from '@react-three/drei';
 import { geometry } from 'maath';
 import DepthBG from "./DepthBG";
 
@@ -9,9 +9,7 @@ extend(geometry);
 const GOLDENRATIO = 1.61803398875;
 
 interface FrameProps {
-  id: string;
   name: string;
-  author: string;
   width?: number;
   height?: number;
   depth?: number;
@@ -21,7 +19,6 @@ interface FrameProps {
 function Frame({
   id,
   name,
-  author,
   width = 1,
   height = GOLDENRATIO,
   depth = 0.5,
@@ -31,23 +28,18 @@ function Frame({
   return (
     <group {...props}>
       <Text 
+        font={'/azonix.woff'}
         color="red"
         fontSize={0.25}
-        letterSpacing={-0.025}
+        letterSpacing={0}
         anchorY="top"
         anchorX="left"
         lineHeight={0.8}
         position={[-0.375, 0.715, depth/2 + 0.01]}>
         {name}
       </Text>
-      <Text color="red" fontSize={0.1} anchorX="right" position={[0.4, -0.659, depth/2 + 0.01]}>
-        /{id}
-      </Text>
-      <Text color="red" fontSize={0.04} anchorX="left" position={[0.0, -0.677, depth/2 + 0.01]}>
-        {author}
-      </Text>
-      <mesh name={id}>
-        <boxGeometry args={[width, height,depth]} />
+      <mesh name={id} receiveShadow>
+        <boxGeometry args={[width, height,depth]}/>
         <MeshPortalMaterial side={DoubleSide}>
           <ambientLight/>
           <DepthBG width={width} height={height} depth={depth*3} />
