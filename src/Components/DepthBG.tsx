@@ -1,6 +1,6 @@
 import { shaderMaterial } from "@react-three/drei";
 import {  extend } from "@react-three/fiber";
-import { BackSide } from "three";
+import { BackSide, Color } from "three";
 
 interface DepthBGProps {
   width: number;
@@ -10,7 +10,7 @@ interface DepthBGProps {
 
 function DepthBG({width, height, depth}: DepthBGProps) {
   const StripeMaterial = shaderMaterial(
-    {},
+    { time: 0, color: new Color(0.2, 0.0, 0.1) },
     // vertex shader
     /*glsl*/ `
       varying vec2 vUv;
@@ -28,9 +28,9 @@ function DepthBG({width, height, depth}: DepthBGProps) {
       varying vec2 vUv;
       varying vec3 vPosition;
       void main() {
-        float stripes = smoothstep(0.95,1., sin(vPosition.z * 30.0 ));
+        float stripes = smoothstep(0.95,1., sin(vPosition.z * 50.0 * time ));
         float fadeOut = smoothstep(-0.9, 0.1, vPosition.z);
-        gl_FragColor.rgba = vec4(fadeOut*0.2*vec3(stripes), 1.0);
+        gl_FragColor.rgba = vec4(fadeOut*0.2*vec3(stripes)*color, 1.0);
       }
     `,
   );
@@ -40,7 +40,7 @@ function DepthBG({width, height, depth}: DepthBGProps) {
   return (
     <mesh>
       <boxGeometry position={[0, 0, 0.8]} args={[width, height, depth]} />
-      <stripeMaterial color="hotpink" time={1} side={BackSide} />
+      <stripeMaterial color="white" time={1} side={BackSide} />
     </mesh>
   );
 }

@@ -1,15 +1,27 @@
 import {  useState } from "react";
 import { Canvas } from '@react-three/fiber';
 import { useSpring, animated } from '@react-spring/three';
-import { CameraControls, Sky, Gltf, Plane, Center, Lightformer } from '@react-three/drei';
+import { CameraControls, Sky, Gltf, Plane, Center, Lightformer, Stats } from '@react-three/drei';
 
 import SkyBox from "./SkyBox";
 import Frame from "./Frame";
 
 const AnimatedGltf = animated(Gltf);
 
+
+interface ModelConfiguration {
+  src: string;
+  position: [number, number, number];
+  scale: number;
+}
+
+const modelsConfiguration : ModelConfiguration[] = [
+  { src: "Donut.glb", position: [0, -0.1, -0.5], scale: 0.1 },
+  { src: "Hamburger.glb", position: [0, -0.5, -0.5], scale: 0.08 },
+]
+
 function ThreeJsRendering() {
-  const [visible, setVisible] = useState<boolean>(true);
+  const [indexVisible, setIndexVisible] = useState<number>(0);
   const props = useSpring({
     from: { scale: 0.05 },
     to: [
@@ -22,6 +34,7 @@ function ThreeJsRendering() {
     },
     loop: true
   });
+
 
   return (
     <Canvas
@@ -44,11 +57,15 @@ function ThreeJsRendering() {
       <Center>
         <Frame name="Alice" position={[-3,0,0]}>
           <Sky />
-          <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={visible} />
+          <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={true} />
         </Frame>
         <Frame name="Guigui" position={[-1,0,0]}>
           <Sky />
-          <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={visible} />
+          {
+          modelsConfiguration.map(({src, position, scale}, index) => {
+            return (<Gltf src={src} position={position} scale={scale} visible={indexVisible === index} />)
+          })
+        }
         </Frame>
       </Center>
       <Plane
@@ -67,11 +84,12 @@ function ThreeJsRendering() {
         onEnd={(e) => {
             const cameraPosition = e.target._camera;
             if(cameraPosition.position.z < 0.1) {
-                setVisible(!visible);
+                setIndexVisible(indexVisible === 0 ? 1 : 0);
             }
           }
         }
       />
+      <Stats/>
     </Canvas>
   );
 }
