@@ -4,7 +4,7 @@ import { useSpring, animated } from '@react-spring/three';
 import { CameraControls, Sky, Gltf, Plane, Center, Lightformer, Stats } from '@react-three/drei';
 
 import SkyBox from "./SkyBox";
-import Frame from "./Frame";
+import Portal from "./Portal";
 
 const AnimatedGltf = animated(Gltf);
 
@@ -41,40 +41,40 @@ function ThreeJsRendering() {
       receiveShadow
       style={{width: 800, height: 800}}
       gl={{ localClippingEnabled: true }}
-      camera={{ fov: 75, position: [0, 0, 1.5] }}
+      camera={{ fov: 75, position: [0, 0, 10] }}
     >
-      <color attach="background" args={['#f0f0f0']} />
-      <SkyBox  size={100} />
-            <ambientLight intensity={0.5} />
+      <color attach="background" args={['grey']} />
+      <ambientLight intensity={0.5} />
       <directionalLight castShadow position={[2.5, 5, 5]} intensity={1.5} shadow-mapSize={[1024, 1024]}>
         <orthographicCamera attach="shadow-camera" args={[-5, 5, 5, -5, 1, 50]} />
       </directionalLight>
 
       <spotLight args={["#FFFFFF",100]} position={[2, 3, 0]} castShadow />
-      <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 3, 0]} scale={[10, 2, 1]} />
+      <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 10, 0]} scale={[10, 2, 1]} />
 
 
       <Center>
-        <Frame name="Alice" position={[0,0,0]} rotation-y={Math.PI}>
+        <Portal position={[0,0,0]} rotation-y={Math.PI}>
           <Sky />
           <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={true} />
-        </Frame>
-        <Frame name="Guigui" position={[0,0,0.5]} >
+        </Portal>
+        <Portal position={[0,0,0.5]} >
           <Sky />
           {
           modelsConfiguration.map(({src, position, scale}, index) => {
             return (<Gltf src={src} position={position} scale={scale} visible={indexVisible === index} />)
           })
         }
-        </Frame>
+        </Portal>
       </Center>
       <Plane
         receiveShadow
-        material-color="#2D1D7A"
         position={[0,-2,0]}
         rotation={[-Math.PI/2,0,0]}
         args={[100,100]}
-      />
+      >
+        <meshStandardMaterial color="orange" />
+      </Plane>
       <CameraControls
         minPolarAngle={0.5}
         maxPolarAngle={Math.PI / 2}
