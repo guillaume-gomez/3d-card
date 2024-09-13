@@ -5,6 +5,7 @@ import { CameraControls, Sky, Gltf, Plane, Center, Lightformer, Stats } from '@r
 
 import SkyBox from "./SkyBox";
 import Portal from "./Portal";
+import Flag from "./Flag";
 
 const AnimatedGltf = animated(Gltf);
 
@@ -16,7 +17,7 @@ interface ModelConfiguration {
 }
 
 const modelsConfiguration : ModelConfiguration[] = [
-  { src: "Donut.glb", position: [0, -0.1, -0.5], scale: 0.1 },
+  { src: "Donut.glb", position: [0, -0.1,    -0.5], scale: 0.1 },
   { src: "Hamburger.glb", position: [0, -0.5, -0.5], scale: 0.08 },
 ]
 
@@ -54,12 +55,21 @@ function ThreeJsRendering() {
 
 
       <Center>
-        <Portal position={[0,0,0]} rotation-y={Math.PI}>
+        <Portal position={[0,0,0]} width={10} height={10} rotation-y={Math.PI}>
+          <Sky />
+          <AnimatedGltf src="Fence.glb" position={[-7.5, -0.1, 0]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[0, -0.1, 0]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[7.5, -0.1, 0]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Another_soldier.glb" position={[0, 0, -4]} scale={0.1} visible={true} />
+          <Flag position={[0,5,-15]} />
+        </Portal>
+        <Portal position={[5,0,0.25]} width={1} height={1} rotation-y={Math.PI/2}>
           <Sky />
           <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={true} />
         </Portal>
-        <Portal position={[0,0,0.5]} >
+        <Portal position={[0,0,0.5]} width={10} height={10} >
           <Sky />
+          <Flag position={[0,5,-15]} />
           {
           modelsConfiguration.map(({src, position, scale}, index) => {
             return (<Gltf src={src} position={position} scale={scale} visible={indexVisible === index} />)
