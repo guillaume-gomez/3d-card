@@ -1,7 +1,16 @@
 import {  useState } from "react";
 import { Canvas } from '@react-three/fiber';
 import { useSpring, animated } from '@react-spring/three';
-import { CameraControls, Sky, Gltf, Plane, Center, Lightformer, Stats } from '@react-three/drei';
+import {
+  CameraControls,
+  Sky,
+  Gltf,
+  Plane,
+  Center,
+  Lightformer,
+  Stats,
+  Box
+} from '@react-three/drei';
 
 import SkyBox from "./SkyBox";
 import Frame from "./Frame";
@@ -68,6 +77,9 @@ function ThreeJsRendering() {
         }
         </Frame>
       </Center>
+      <Box position={[0,2,0]} scale={0.5}>
+        <meshLambertMaterial emissive={0x00FF0F}/>
+      </Box>
       <Plane
         receiveShadow
         material-color="#2D1D7A"

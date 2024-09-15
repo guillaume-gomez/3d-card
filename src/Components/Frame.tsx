@@ -49,13 +49,13 @@ function Frame({
       <mesh name={id} position={[0, 0, -0.001]} castShadow receiveShadow>
         <boxGeometry args={[width + 0.05, height + 0.05, depth]} />
         {/*<meshBasicMaterial side={BackSide}>*/}
-        <meshBasicMaterial side={FrontSide}>
+        <meshLambertMaterial side={FrontSide}>
           <GradientTexture
           stops={[0, 0.25, 1]} // As many stops as you want
           colors={['blue', "#a6d023", 'hotpink']} // Colors need to match the number of stops
           size={1024} // Size is optional, default = 1024
           />
-       </meshBasicMaterial>
+       </meshLambertMaterial>
       </mesh>
     </group>
   )
