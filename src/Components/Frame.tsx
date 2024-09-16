@@ -29,20 +29,20 @@ function Frame({
     <group {...props}>
       <Text 
         font={'/azonix.woff'}
-        color="red"
+        color={0xFA09AA}
         fontSize={0.25}
         letterSpacing={0}
         anchorY="top"
-        anchorX="left"
+        anchorX="center"
         lineHeight={0.8}
-        position={[-0.375, 0.8, depth/2 + 0.01]}>
+        position={[0, 0.7, depth/2 + 0.01]}>
         {name}
       </Text>
       <mesh name={id} castShadow receiveShadow>
-        <boxGeometry args={[width, height,depth]}/>
+        <boxGeometry args={[width, height, depth]}/>
         <MeshPortalMaterial side={DoubleSide}>
           <ambientLight/>
-          <DepthBG width={width} height={height} depth={depth*3} />
+          <DepthBG width={width} height={height} depth={depth*3} animate />
           {children}
         </MeshPortalMaterial>
       </mesh>
