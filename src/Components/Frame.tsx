@@ -42,7 +42,7 @@ function Frame({
         <boxGeometry args={[width, height, depth]}/>
         <MeshPortalMaterial side={DoubleSide}>
           <ambientLight/>
-          <DepthBG width={width} height={height} depth={depth*3} animate />
+          <DepthBG width={width} height={height} depth={depth*3} animate={false} />
           {children}
         </MeshPortalMaterial>
       </mesh>

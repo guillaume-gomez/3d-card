@@ -54,15 +54,20 @@ function ThreeJsRendering() {
     >
       <color attach="background" args={['#f0f0f0']} />
       <SkyBox  size={100} />
-            <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.5} />
       <directionalLight castShadow position={[2.5, 5, 5]} intensity={1.5} shadow-mapSize={[1024, 1024]}>
         <orthographicCamera attach="shadow-camera" args={[-5, 5, 5, -5, 1, 50]} />
       </directionalLight>
 
-      <spotLight args={["#FFFFFF",100]} position={[2, 3, 0]} castShadow />
-      <Lightformer intensity={2} rotation-x={Math.PI / 2} position={[0, 3, 0]} scale={[10, 2, 1]} />
-
-
+      <spotLight args={["#FFFFFF",20]} position={[2, 3, 0]} castShadow />
+      <Lightformer
+        form="rect"
+        intensity={1}
+        rotation-x={Math.PI / 2}
+        position={[0, 3, 0]}
+        scale={[10, 2, 1]}
+        color={0xFFFFFF}
+      />
       <Center>
         <Frame name="Alice" position={[-3,0,0]}>
           <Sky />
