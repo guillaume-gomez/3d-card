@@ -69,11 +69,11 @@ function ThreeJsRendering() {
         color={0xFFFFFF}
       />
       <Center>
-        <Frame name="Alice" position={[-3,0,0]}>
+        <Frame name="Align ?" position={[-3,0,0]}>
           <Sky />
           <AnimatedGltf src="Donut.glb" position={[0, -0.1, 0]} scale={props.scale} visible={true} />
         </Frame>
-        <Frame name="Guigui" position={[-1,0,0]}>
+        <Frame name="Centered ?" position={[-1,0,0]}>
           <Sky />
           {
           modelsConfiguration.map(({src, position, scale}, index) => {
