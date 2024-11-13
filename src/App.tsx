@@ -8,7 +8,7 @@ function App() {
         <h1 className="text-3xl font-bold underline">
           Portal Experiment
         </h1>
-        <ThreeJsRendering2 />
+        <ThreeJsRendering />
       </div>
     </div>
   );
