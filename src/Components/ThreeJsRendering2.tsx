@@ -57,11 +57,17 @@ function ThreeJsRendering() {
       <Center>
         <Portal position={[0,0,0]} width={10} height={10} rotation-y={Math.PI}>
           <Sky />
-          <AnimatedGltf src="Fence.glb" position={[-7.5, -0.1, 0]} scale={1.0} visible={true} />
-          <AnimatedGltf src="Fence.glb" position={[0, -0.1, 0]} scale={1.0} visible={true} />
-          <AnimatedGltf src="Fence.glb" position={[7.5, -0.1, 0]} scale={1.0} visible={true} />
-          <AnimatedGltf src="Another_soldier.glb" position={[0, 0, -4]} scale={0.1} visible={true} />
-          <Flag position={[0,5,-15]} />
+          <AnimatedGltf src="Fence.glb" position={[-22.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[-15, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[-7.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[0, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[7.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[15, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[22.5, -0.1, -10]} scale={1.0} visible={true} />
+          {/*<AnimatedGltf src="Another_soldier.glb" position={[0, 0, -15]} scale={0.15} visible={true} />*/}
+          <AnimatedGltf src="Soldier.glb" position={[0, 0, -15]} scale={1} visible={true} />
+          <AnimatedGltf src="Man.glb" position={[0, 0, 2]} rotation-y={Math.PI} scale={1} visible={true} />
+          <Flag position={[0,5,-20]} flagPath="flags/North_Korea.png" />
         </Portal>
         <Portal position={[5,0,0.25]} width={1} height={1} rotation-y={Math.PI/2}>
           <Sky />
@@ -69,11 +75,21 @@ function ThreeJsRendering() {
         </Portal>
         <Portal position={[0,0,0.5]} width={10} height={10} >
           <Sky />
-          <Flag position={[0,5,-15]} />
-          {
+          <AnimatedGltf src="Fence.glb" position={[-22.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[-15, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[-7.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[0, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[7.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[15, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Fence.glb" position={[22.5, -0.1, -10]} scale={1.0} visible={true} />
+          <AnimatedGltf src="Another_soldier.glb" position={[0, 0, -15]} scale={0.15} visible={true} />
+          <AnimatedGltf src="Man.glb" position={[0, 0, 2]} rotation-y={Math.PI} scale={1} visible={true} />
+          <Flag position={[0,5,-20]} flagPath="flags/South_Korea.png" />
+
+          {/*{
           modelsConfiguration.map(({src, position, scale}, index) => {
             return (<Gltf src={src} position={position} scale={scale} visible={indexVisible === index} />)
-          })
+          })*/}
         }
         </Portal>
       </Center>
