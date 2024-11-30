@@ -1,5 +1,6 @@
 import ThreeJsRendering from "./Components/ThreeJsRendering";
 import ThreeJsRendering2 from "./Components/ThreeJsRendering2";
+import CardRendering from "./Components/2DCardRendering";
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
         <h1 className="text-3xl font-bold underline">
           Portal Experiment
         </h1>
-        <ThreeJsRendering />
+        <CardRendering />
       </div>
     </div>
   );
