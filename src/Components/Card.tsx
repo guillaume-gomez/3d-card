@@ -1,12 +1,17 @@
 import { useRef } from "react";
+import image from "/dandp.png"
 
 interface cardInterface {
     title: string;
+    content: string;
+    color: string;
     borderBackground: string;
     level: number;
+    totalSeries: number;
+    seriesPosition: number;
 }
 
-function Card({title, borderBackground , level} : cardInterface ) {
+function Card({title, content, color, borderBackground , level, seriesPosition, totalSeries} : cardInterface ) {
     const boundingRef = useRef<DOMRect|null>(null);
     return (
         <div
@@ -46,20 +51,22 @@ function Card({title, borderBackground , level} : cardInterface ) {
             <div className="card-body rounded-xl items-center text-black text-center bg-white p-0">
                 <figure className="h-full">
                 <img
-                  src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                  src={image}
                   alt="Shoes"
                   className="rounded-xl h-full" />
                 </figure>
                 <div className="absolute inset-0 text-black">
-                    <div className="bg-secondary p-4 rounded-xl" style={{width: 50}}>
+                    <div className="p-4 rounded-xl" style={{width: 50, background: color}}>
                         <span className="font-bold">{level}</span>
                     </div>
                 </div>
-                <div className="absolute text-black text-center" style={{bottom: 5}}>
-                    <h2 className="font-extrabold text-bold bg-secondary p-4 text-2xl">{title}</h2>
-                    <p className="bg-accent">If a dog chews shoes whose shoes does he choose?</p>
-                    <span className="rounded-xl p-2 text-xs bg-primary" style={{width: 50}}>
-                        5/20
+                <div className="absolute text-black text-center w-full flex flex-col items-center gap-1" style={{bottom: 5}}>
+                    <div>
+                        <h2 className="font-extrabold text-bold bg-secondary p-4 text-2xl w-full" style={{background: color}}>{title}</h2>
+                        <p style={{background: color}}>{content}</p>
+                    </div>
+                    <span className="rounded-xl p-2 text-xs" style={{width: 50, background: color}}>
+                        {seriesPosition}/{totalSeries}
                     </span>
                 </div>
                 <div className="pointer-events-none absolute inset-0 group-hover:bg-[radial-gradient(at_var(--x)_var(--y),rgba(255,255,255,0.3)_20%,transparent_80%)]"
