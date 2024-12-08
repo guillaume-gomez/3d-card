@@ -47,7 +47,7 @@ function CardRendering () {
     const [title , setTitle] = useState<string>("Pomyad");
     const [content , setContent] = useState<string>("Ceci est un contenu pour montrer que ca marche mdr");
     return (
-        <div className="h-screen flex flex-col gap-6 items-center justify-center p-10">
+        <div className="h-screen flex flex-col gap-9 items-center justify-center p-10">
             <div className="card bg-base-300 w-96 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title">Settings</h2>
@@ -90,6 +90,18 @@ function CardRendering () {
 
 
             <div className="flex flex-row gap-6 [perspective:800px]">
+              <Card
+                title={title}
+                color={color}
+                content={content}
+                borderBackground={borderBackground}
+                level={5}
+                totalSeries={20}
+                seriesPosition={7}
+                />
+            </div>
+
+            <div className="flex flex-row gap-6 [perspective:800px]">
               {cardData.map(({title, color, content, borderBackground, level, totalSeries, seriesPosition}) => {
                 return (
                   <Card
@@ -103,19 +115,8 @@ function CardRendering () {
                   seriesPosition={seriesPosition}
                   />
                 );
-              })}
-              <Card
-                title={title}
-                color={color}
-                content={content}
-                borderBackground={borderBackground}
-                level={5}
-                totalSeries={20}
-                seriesPosition={7}
-                />
-
-
-            </div>
+                })}
+              </div>
 
 
         </div>
